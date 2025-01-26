@@ -18,6 +18,7 @@ Design Write-Up
 * I wanted to split the form into personal info, address, and contact info because I believe that is the most relevant grouping of steps in a real-world setting. First, the system should determine the user's name (common for most forms to have names at the top). Second, as this is a home-improvement sweepstakes, the system should determine the geographical location as the second step, as different locations can have different challenges and price considerations. Passing all this info into the formData object allows for the possibility for server-side processing to determine costs or other factors without passing in info that is not relevant to this step. Third, phone number and email are at the end mainly due to a psychological componenet. These two fields have the most value when it comes to user data, as most sweepstakes are ways to gather contact info for newsletters and the like, and the user is most likely to fill out this information since they've already gone through most of the form already.
 * Site is fully mobile responsive, including collapsible navbar
 * Incorporated light gray and green colors from original design, introduced dark gray navbar and buttons to promote color contrast
+* Console logs formData at each step
 
 Data Validation and Convenience Features
 * Clicking the links in the navbar first checks if form is complete, and prevents users from resubmitting or accessing previous sections after submitting
