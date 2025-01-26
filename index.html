@@ -46,9 +46,10 @@
 	    });
 
 		let formData = {};
+		let complete = false;
 
 		function PISubmission(event) {
-			formData.personalInfo = {
+			formData.personalInfo = { //add user input to formData
 				firstName: document.getElementById('firstname').value,
 		    	lastName: document.getElementById('lastname').value,
 		    	dob: document.getElementById('dob').value,
@@ -56,9 +57,6 @@
 		  	};
 
 		  	// Hide this form and show the next
-		  	// document.getElementById('personalinfo').style.display = 'none';
-		  	// document.getElementById('address').style.display = 'block';
-
 		  	document.getElementById('personalinfo').classList.add('hidden');
 	  	    document.getElementById('address').classList.remove('hidden');
 
@@ -66,7 +64,7 @@
 		}
 
 		function AddressSubmission(event) {
-		  formData.address = {
+		  formData.address = { //add user input to formData
 		    street: document.getElementById('street').value,
 		    apt: document.getElementById('apt').value,
 		    city: document.getElementById('city').value,
@@ -75,9 +73,6 @@
 		  };
 
 		  // Hide this form and show the next
-		  // document.getElementById('address').style.display = 'none';
-		  // document.getElementById('contact').style.display = 'block';
-
 		  document.getElementById('address').classList.add('hidden');
 	      document.getElementById('contact').classList.remove('hidden');
 
@@ -85,7 +80,7 @@
 		}
 
 		function ContactSubmission(event) {
-			formData.contact = {
+			formData.contact = { //add user input to formData
 				email: document.getElementById('email').value,
 				phone: document.getElementById('phone').value
 			};
@@ -94,17 +89,11 @@
 
 			if (!formData.personalInfo){
 				//if no address info, show the PI section
-				// document.getElementById('reminder').style.display = 'block';
 				document.getElementById('reminder').classList.remove('hidden');
-				// document.getElementById('personalinfo').style.display = 'block';
-				// document.getElementById('address').style.display = 'none';
-				// document.getElementById('contact').style.display = 'none';
-				// document.getElementById('complete').style.display = 'none';
 				document.getElementById('personalinfo').classList.remove('hidden');
 				document.getElementById('address').classList.add('hidden');
 				document.getElementById('contact').classList.add('hidden');
-				// document.getElementById('complete').classList.add('hidden');
-
+				
 			} else if (!formData.address){
 				// if no personal info, show the address section
 				document.getElementById('reminder').classList.remove('hidden');
@@ -123,7 +112,7 @@
 				document.getElementById('personalinfo').classList.add('hidden');
 				document.getElementById('address').classList.add('hidden');
 				document.getElementById('contact').classList.add('hidden');
-				// document.getElementById('complete').classList.remove('hidden');
+				document.getElementById('complete').classList.remove('hidden');
 
 				//setting to display: none after adding hidden class prevents user from going back to form sections after completion 
 				document.getElementById('reminder').style.display = 'none';
@@ -132,6 +121,7 @@
 				document.getElementById('contact').style.display = 'none';
 				document.getElementById('complete').style.display = 'block !important';
 
+				complete = true; //set bool to true to affect if statement logic of navbar
 				// uncomment the following line to call finalSubmission on a live site
 				// finalSubmission();
 			}
@@ -229,34 +219,49 @@
 		    }
 		}
 		function jumpToPI(){
-			// document.getElementById("personalinfo").style.display = "block";
-			// document.getElementById("address").style.display = "none";
-			// document.getElementById("contact").style.display = "none";
-			// document.getElementById("complete").style.display = "none";
 			document.getElementById("personalinfo").classList.remove("hidden");
 			document.getElementById("address").classList.add("hidden");
 			document.getElementById("contact").classList.add("hidden");
-			document.getElementById("complete").classList.add("hidden");
+			if (complete == false){ // show send confirmation and hide sections if bool is true
+				document.getElementById('complete').classList.add('hidden');
+				document.getElementById("personalinfo").classList.remove("hidden");
+				document.getElementById("address").classList.add("hidden");
+				document.getElementById("contact").classList.add("hidden");
+			} else {
+				document.getElementById('complete').classList.remove('hidden');
+				document.getElementById("personalinfo").classList.add("hidden");
+				document.getElementById("reminder").classList.add("hidden");
+				document.getElementById("address").classList.add("hidden");
+				document.getElementById("contact").classList.add("hidden");
+			}
 		}
 		function jumpToAddress(){
-			// document.getElementById("personalinfo").style.display = "none";
-			// document.getElementById("address").style.display = "block";
-			// document.getElementById("contact").style.display = "none";
-			// document.getElementById("complete").style.display = "none";
-			document.getElementById("personalinfo").classList.add("hidden");
-			document.getElementById("address").classList.remove("hidden");
-			document.getElementById("contact").classList.add("hidden");
-			document.getElementById("complete").classList.add("hidden");
+			if (complete == false){ // show send confirmation and hide sections if bool is true
+				document.getElementById("personalinfo").classList.add("hidden");
+				document.getElementById("address").classList.remove("hidden");
+				document.getElementById("contact").classList.add("hidden");
+				document.getElementById("complete").classList.add("hidden");
+			} else {
+				document.getElementById('complete').classList.remove('hidden');
+				document.getElementById("personalinfo").classList.add("hidden");
+				document.getElementById("reminder").classList.add("hidden");
+				document.getElementById("address").classList.add("hidden");
+				document.getElementById("contact").classList.add("hidden");
+			}
 		}
 		function jumpToContact(){
-			// document.getElementById("personalinfo").style.display = "none";
-			// document.getElementById("address").style.display = "none";
-			// document.getElementById("contact").style.display = "block";
-			// document.getElementById("complete").style.display = "none";
-			document.getElementById("personalinfo").classList.add("hidden");
-			document.getElementById("address").classList.add("hidden");
-			document.getElementById("contact").classList.remove("hidden");
-			document.getElementById("complete").classList.add("hidden");
+			if (complete == false){ // show send confirmation and hide sections if bool is true
+				document.getElementById("personalinfo").classList.add("hidden");
+				document.getElementById("address").classList.add("hidden");
+				document.getElementById("contact").classList.remove("hidden");
+				document.getElementById("complete").classList.add("hidden");
+			} else {
+				document.getElementById('complete').classList.remove('hidden');
+				document.getElementById("personalinfo").classList.add("hidden");
+				document.getElementById("reminder").classList.add("hidden");
+				document.getElementById("address").classList.add("hidden");
+				document.getElementById("contact").classList.add("hidden");
+			}
 		}
 	</script>
 </head>
@@ -443,7 +448,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="form-success" style="display:none;" id="complete">
+		<div class="form-success" id="complete">
 			<p>Thanks for entering the sweepstakes! We'll be in touch if you win.</p>
 		</div>
 	</div>
